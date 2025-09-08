@@ -55,23 +55,20 @@ body {
 
 .header {
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    gap: 8px;
+}
+
+.logo {
+    height: 50px;   /* Adjust size */
+    width: auto;    /* Keep aspect ratio */
 }
 
 .header h1 {
     font-size: 24px;
     margin: 0;
-}
-
-.logo {
-    height: 40px;
-    margin-right: 8px;
-}
-
-.header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px;
 }
 
 .visually-hidden {
