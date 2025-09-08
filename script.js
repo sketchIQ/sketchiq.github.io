@@ -146,8 +146,8 @@ function saveSession() {
     localStorage.setItem('sketchiq-session', JSON.stringify(sessionData));
 }
 
-async function handleGenerateClick() {
-    const prompt = promptInput.value.trim();
+async function handleGenerateClick(promptOverride = null, isFixAttempt = false) {
+    const prompt = promptOverride || promptInput.value.trim();
     if (!prompt) {
         alert('Please enter a prompt.');
         return;
@@ -158,13 +158,15 @@ async function handleGenerateClick() {
         return;
     }
 
-    addMessage('user', prompt);
+    if (!isFixAttempt) {
+        addMessage('user', prompt);
+    }
     promptInput.value = '';
     generateBtn.disabled = true;
     generateBtn.textContent = 'Generating...';
 
     try {
-        const fullPrompt = `
+        const fullPrompt = isFixAttempt ? prompt : `
             You are an expert in Mermaid.js syntax.
             The user wants to create or update a diagram.
             Based on the user's prompt, generate a complete and valid Mermaid.js script.
@@ -187,12 +189,18 @@ async function handleGenerateClick() {
 
         const data = await response.json();
         const generatedText = data.candidates[0].content.parts[0].text.trim();
-        const cleanMermaidCode = generatedText.replace(/```mermaid\n/g, '').replace(/```/g, '').trim();
+        const faultyCode = generatedText.replace(/```mermaid\n/g, '').replace(/```/g, '').trim();
 
-        sessionData.mermaidCode = cleanMermaidCode;
-        renderDiagram(cleanMermaidCode);
-        mermaidCodeEl.textContent = cleanMermaidCode;
-        addMessage('system', 'Diagram updated successfully!');
+        const renderResult = await renderDiagram(faultyCode);
+
+        if (renderResult.success) {
+            sessionData.mermaidCode = faultyCode;
+            mermaidCodeEl.textContent = faultyCode;
+            addMessage('system', 'Diagram updated successfully!');
+            saveSession();
+        } else {
+            handleRenderError(faultyCode, renderResult.error);
+        }
 
     } catch (error) {
         console.error('Error generating diagram:', error);
@@ -207,9 +215,69 @@ async function renderDiagram(code) {
     try {
         const { svg } = await mermaid.render('mermaid-graph', code);
         diagramContainer.innerHTML = svg;
+        return { success: true, error: null };
     } catch (error) {
-        diagramContainer.innerHTML = `<p>Error rendering diagram:</p><pre>${error.message}</pre>`;
+        return { success: false, error: error };
     }
+}
+
+function handleRenderError(faultyCode, error) {
+    const messageContent = `The AI generated a diagram that couldn't be rendered. Error: ${error.message.split('...')[0]}`;
+
+    // Create the main message element
+    const messageEl = document.createElement('div');
+    messageEl.classList.add('chat-message', 'system-message', 'error-message');
+
+    // Add the error text
+    const textEl = document.createElement('p');
+    textEl.textContent = messageContent;
+    messageEl.appendChild(textEl);
+
+    // Create a container for the buttons
+    const buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('error-actions');
+
+    // Create the "Fix with AI" button
+    const fixBtn = document.createElement('button');
+    fixBtn.textContent = 'Fix with AI';
+    fixBtn.classList.add('error-btn');
+    fixBtn.addEventListener('click', () => {
+        const fixPrompt = `
+            The following Mermaid.js script produced an error. Please fix the script.
+            Do not add any explanation, just provide the corrected, complete Mermaid.js script.
+
+            Faulty Script:
+            \`\`\`mermaid
+            ${faultyCode}
+            \`\`\`
+
+            Error Message:
+            "${error.message}"
+        `;
+        addMessage('system', 'Attempting to fix the diagram with AI...');
+        handleGenerateClick(fixPrompt, true);
+        // Remove the error message with the buttons after an action is taken
+        messageEl.remove();
+    });
+
+    // Create the "Revert & Retry" button
+    const revertBtn = document.createElement('button');
+    revertBtn.textContent = 'Revert & Retry';
+    revertBtn.classList.add('error-btn');
+    revertBtn.addEventListener('click', () => {
+        addMessage('system', 'Diagram reverted. Please try a different prompt.');
+        // Just remove the error message, the state is already reverted.
+        messageEl.remove();
+    });
+
+    // Add buttons to the container and the container to the message
+    buttonContainer.appendChild(fixBtn);
+    buttonContainer.appendChild(revertBtn);
+    messageEl.appendChild(buttonContainer);
+
+    // Add the complete error message to the chat
+    chatContainer.appendChild(messageEl);
+    chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
 // --- Initial Load ---
