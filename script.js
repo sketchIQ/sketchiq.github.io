@@ -63,7 +63,7 @@ resetBtn.addEventListener('click', () => {
     }
 });
 
-generateBtn.addEventListener('click', handleGenerateClick);
+generateBtn.addEventListener('click', () => handleGenerateClick());
 
 copyBtn.addEventListener('click', () => {
     navigator.clipboard.writeText(mermaidCodeEl.textContent).then(() => {
