@@ -1,23 +1,12 @@
 :root {
-    --bg-color: #f9f9f9;
+    --bg-color: #f0f0f0;
     --text-color: #1a1a1a;
-    --panel-bg-color: #ffffff;
+    --panel-bg-color: #f9f9f9;
     --border-color: #e5e5e5;
     --primary-color: #8A2BE2; /* BlueViolet */
     --primary-text-color: #ffffff;
     --shadow-color: rgba(0, 0, 0, 0.05);
-    --input-bg-color: #ffffff;
-}
-
-body.dark-mode {
-    --bg-color: #171717;
-    --text-color: #e2e2e2;
-    --panel-bg-color: #212121;
-    --border-color: #333333;
-    --primary-color: #9932CC; /* DarkOrchid */
-    --primary-text-color: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.2);
-    --input-bg-color: #2c2c2c;
+    --input-bg-color: #f9f9f9;
 }
 
 body {
@@ -62,7 +51,7 @@ body {
 }
 
 .logo {
-    height: 50px;   /* Adjust size */
+    height: 100px;   /* Adjust size */
     width: auto;    /* Keep aspect ratio */
 }
 
@@ -332,88 +321,6 @@ body {
     cursor: pointer;
 }
 
-/* Dark Mode Toggle */
-.dark-mode-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-}
-
-.switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-}
-
-.switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 5px;
-}
-
-.slider .sun, .slider .moon {
-    font-size: 16px;
-    opacity: 1;
-    transition: opacity 0.4s;
-    line-height: 1; /* Prevent emoji from affecting slider height */
-}
-
-input:not(:checked) + .slider .moon {
-    opacity: 0;
-}
-
-input:checked + .slider .sun {
-    opacity: 0;
-}
-
-.slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    z-index: 1;
-}
-
-input:checked + .slider {
-    background-color: var(--primary-color);
-}
-
-input:focus + .slider {
-    box-shadow: 0 0 1px var(--primary-color);
-}
-
-input:checked + .slider:before {
-    transform: translateX(26px);
-}
-
-.slider.round {
-    border-radius: 34px;
-}
-
-.slider.round:before {
-    border-radius: 50%;
-}
-
 .error-message {
     border: 1px solid #ff4d4d;
     background-color: rgba(255, 77, 77, 0.1);
@@ -472,13 +379,12 @@ input:checked + .slider:before {
         font-size: 20px;
     }
 
-    .dark-mode-toggle {
-        top: 10px;
-        right: 10px;
-    }
-
     .modal-content {
         width: 90%;
         margin: 30% auto;
+    }
+
+    .logo {
+        height: 60px;
     }
 }
