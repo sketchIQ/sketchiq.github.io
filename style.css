@@ -52,9 +52,7 @@ body {
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 20px;
 }
 
 .header h1 {
@@ -62,20 +60,7 @@ body {
     margin: 0;
 }
 
-#reset-btn {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-color);
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-#reset-btn:hover {
-    background-color: var(--border-color);
-}
+/* This is now empty as the styles are moved */
 
 .chat-container {
     flex-grow: 1;
@@ -111,8 +96,14 @@ body {
 }
 
 .prompt-editor {
+    margin-top: auto; /* Pushes the editor to the bottom of the left panel */
     display: flex;
     flex-direction: column;
+}
+
+.prompt-actions {
+    display: flex;
+    gap: 10px;
 }
 
 #prompt-input {
@@ -138,8 +129,27 @@ body {
     transition: background-color 0.3s;
 }
 
+#generate-btn {
+    flex-grow: 1;
+}
+
 #generate-btn:hover {
     opacity: 0.9;
+}
+
+#reset-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#reset-btn:hover {
+    background-color: var(--border-color);
 }
 
 .tabs {
@@ -330,6 +340,25 @@ body {
     bottom: 0;
     background-color: #ccc;
     transition: .4s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5px;
+}
+
+.slider .sun, .slider .moon {
+    font-size: 16px;
+    opacity: 1;
+    transition: opacity 0.4s;
+    line-height: 1; /* Prevent emoji from affecting slider height */
+}
+
+input:not(:checked) + .slider .moon {
+    opacity: 0;
+}
+
+input:checked + .slider .sun {
+    opacity: 0;
 }
 
 .slider:before {
@@ -341,6 +370,7 @@ body {
     bottom: 4px;
     background-color: white;
     transition: .4s;
+    z-index: 1;
 }
 
 input:checked + .slider {
