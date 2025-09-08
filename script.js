@@ -1,11 +1,8 @@
 import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
 
-// Check for dark mode preference immediately to initialize mermaid with the correct theme
-const isDarkMode = localStorage.getItem('dark-mode') === 'true';
-
 mermaid.initialize({
     startOnLoad: false,
-    theme: isDarkMode ? 'dark' : 'default',
+    theme: 'default',
 });
 
 // --- DOM Elements ---
@@ -14,7 +11,6 @@ const apiKeyModal = document.getElementById('api-key-modal');
 const closeBtn = document.querySelector('.close-btn');
 const saveApiKeyBtn = document.getElementById('save-api-key-btn');
 const apiKeyInput = document.getElementById('api-key-input');
-const darkModeCheckbox = document.getElementById('dark-mode-checkbox');
 const promptInput = document.getElementById('prompt-input');
 const generateBtn = document.getElementById('generate-btn');
 const resetBtn = document.getElementById('reset-btn');
@@ -49,11 +45,6 @@ saveApiKeyBtn.addEventListener('click', () => {
     } else {
         alert('Please enter a valid API Key.');
     }
-});
-
-darkModeCheckbox.addEventListener('change', () => {
-    localStorage.setItem('dark-mode', darkModeCheckbox.checked);
-    window.location.reload();
 });
 
 resetBtn.addEventListener('click', () => {
@@ -108,10 +99,6 @@ tabs.forEach(tab => {
 // --- Functions ---
 
 function loadState() {
-    const darkMode = localStorage.getItem('dark-mode') === 'true';
-    darkModeCheckbox.checked = darkMode;
-    document.body.classList.toggle('dark-mode', darkMode);
-
     renderChat();
 
     if (sessionData.mermaidCode) {
