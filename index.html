@@ -12,15 +12,13 @@
         <div class="left-panel">
             <div class="header">
                 <h1>SketchIQ</h1>
+                <button id="reset-btn">Reset</button>
             </div>
-            <div class="history-sidebar">
-                <h2>History</h2>
-                <ul id="history-list">
-                    <!-- History items will be populated here -->
-                </ul>
+            <div id="chat-container" class="chat-container">
+                <!-- Chat messages will be populated here -->
             </div>
             <div class="prompt-editor">
-                <textarea id="prompt-input" placeholder="e.g., Create a flowchart for a login process..."></textarea>
+                <textarea id="prompt-input" placeholder="Describe the diagram you want to create or update..."></textarea>
                 <button id="generate-btn">Generate Diagram</button>
             </div>
         </div>

@@ -51,38 +51,63 @@ body {
     width: 60%;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .header h1 {
     font-size: 24px;
-    margin-top: 0;
-}
-
-.history-sidebar {
-    flex-grow: 1;
-    overflow-y: auto;
-    margin-bottom: 20px;
-}
-
-.history-sidebar h2 {
-    font-size: 18px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-}
-
-#history-list {
-    list-style: none;
-    padding: 0;
     margin: 0;
 }
 
-#history-list li {
-    padding: 10px;
+#reset-btn {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 6px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    font-size: 14px;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
-#history-list li:hover {
+#reset-btn:hover {
     background-color: var(--border-color);
+}
+
+.chat-container {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-message {
+    padding: 10px 15px;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    max-width: 80%;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+    align-self: flex-end;
+    margin-left: auto;
+}
+
+.system-message {
+    background-color: var(--panel-bg-color);
+    align-self: flex-start;
 }
 
 .prompt-editor {
@@ -336,4 +361,44 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .left-panel, .right-panel {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        height: 50vh; /* Give each panel a portion of the viewport height */
+    }
+
+    .right-panel {
+        border-bottom: none;
+    }
+
+    #prompt-input {
+        height: 100px; /* Reduce default height on mobile */
+    }
+
+    .floating-btn {
+        bottom: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .dark-mode-toggle {
+        top: 10px;
+        right: 10px;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 30% auto;
+    }
 }
