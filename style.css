@@ -1,23 +1,23 @@
 :root {
-    --bg-color: #ffffff;
+    --bg-color: #f9f9f9;
     --text-color: #1a1a1a;
-    --panel-bg-color: #f7f7f7;
-    --border-color: #e0e0e0;
-    --primary-color: #007bff;
+    --panel-bg-color: #ffffff;
+    --border-color: #e5e5e5;
+    --primary-color: #8A2BE2; /* BlueViolet */
     --primary-text-color: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-color: rgba(0, 0, 0, 0.05);
     --input-bg-color: #ffffff;
 }
 
 body.dark-mode {
-    --bg-color: #1a1a1a;
-    --text-color: #f0f0f0;
-    --panel-bg-color: #2c2c2c;
-    --border-color: #444444;
-    --primary-color: #007bff;
+    --bg-color: #171717;
+    --text-color: #e2e2e2;
+    --panel-bg-color: #212121;
+    --border-color: #333333;
+    --primary-color: #9932CC; /* DarkOrchid */
     --primary-text-color: #ffffff;
-    --shadow-color: rgba(0, 0, 0, 0.4);
-    --input-bg-color: #3a3a3a;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --input-bg-color: #2c2c2c;
 }
 
 body {
@@ -45,6 +45,8 @@ body {
     width: 40%;
     background-color: var(--panel-bg-color);
     border-right: 1px solid var(--border-color);
+    box-shadow: 2px 0 15px -5px var(--shadow-color);
+    z-index: 10;
 }
 
 .right-panel {
@@ -68,7 +70,7 @@ body {
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 12px;
     background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
@@ -110,7 +112,7 @@ body {
     height: 150px;
     resize: vertical;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: 12px;
     border: 1px solid var(--border-color);
     background-color: var(--input-bg-color);
     color: var(--text-color);
@@ -124,9 +126,9 @@ body {
     background-color: var(--primary-color);
     color: var(--primary-text-color);
     border: none;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s, box-shadow 0.3s;
 }
 
 #generate-btn {
@@ -134,7 +136,7 @@ body {
 }
 
 #generate-btn:hover {
-    opacity: 0.9;
+    box-shadow: 0 0 15px 0px var(--primary-color);
 }
 
 #reset-btn {
@@ -142,7 +144,7 @@ body {
     border: 1px solid var(--border-color);
     color: var(--text-color);
     padding: 12px;
-    border-radius: 8px;
+    border-radius: 12px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
